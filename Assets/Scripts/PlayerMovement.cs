@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 10f;  // Erhöht, da AddForce typischerweise größere Werte benötigt
+    public float moveForce = 10f;
+    public float maxSpeed = 5f;
+    public float stopForce = 15f;
     private List<GameObject> list = new List<GameObject>();
     public Texture2D texture;
     public Rigidbody2D rb;
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector2 movement = Vector2.zero;
 
@@ -38,6 +39,19 @@ public class PlayerMovement : MonoBehaviour
             movement += Vector2.down;
         }
 
-        rb.AddForce(movement.normalized * speed);
+        if (movement != Vector2.zero)
+        {
+            // Bewegung
+            rb.AddForce(movement.normalized * moveForce);
+
+            // Geschwindigkeit begrenzen
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+        }
+        else
+        {
+            // Abruptes Stoppen
+            Vector2 oppositeForce = -rb.velocity * stopForce;
+            rb.AddForce(oppositeForce);
+        }
     }
 }
