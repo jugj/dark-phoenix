@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FinishKey : MonoBehaviour
+public class Finish2 : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,6 @@ public class FinishKey : MonoBehaviour
     // called when the cube hits the floor
     void OnCollisionEnter2D(Collision2D col)
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 }
